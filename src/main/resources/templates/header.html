@@ -1,1 +1,78 @@
-<h>$title</h>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Theming - Semantic</title>
+    <link rel="stylesheet" type="text/css" href="/dist/semantic.css">
+    <script src="/dist/jquery.min.js"></script>
+    <script src="/dist/semantic.js"></script>
+
+    <!--弹出框
+    <script type="text/javascript">
+        $(function() {
+            $(".item.zixun").bind("click", function() {
+                $('.ui.basic.modal.zixun').modal('show');
+            })
+        })
+    </script>
+    -->
+
+</head>
+
+<body>
+<!--导航-->
+<div class="ui inverted menu">
+    <a class="item" href="/">
+        主页
+    </a>
+    <a class="item zixun" href="/msg/list">
+        站内信
+    </a>
+    <a class="item zixun" href="/addmessagepage">
+        发信
+    </a>
+    <a class="item " href="/addquestionpage">
+        资讯
+    </a>
+    <a class="item " href="/followee">
+        关注的人
+    </a>
+    <a class="item " href="/followees">
+        被谁关注
+    </a>
+    <a class="item " href="/follower">
+        关注的问题
+    </a>
+
+    #if($!{user})
+    <a class="item ">
+        $!{user.name}
+    </a>
+    #else
+    <a class="item ">
+        user
+    </a>
+    #end
+
+    <div class="right menu">
+        #if($!{user})
+        <a class="item ">
+            $!{user.name}
+        </a>
+        <a class="item login" href="/logout">
+            登出
+        </a>
+        #else
+        <a class="item login" href="/loginpage">
+            登录
+        </a>
+        <a class="item regist" href="/regpage">
+            注册
+        </a>
+        #end
+    </div>
+</div>
+<pre>
+
+</pre>

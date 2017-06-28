@@ -1,0 +1,37 @@
+#parse("header.html")
+<div class="ui grid">
+    <div class="five wide column"></div>
+
+    <div class="six wide column">
+        <h2 class="ui teal image header">
+            <img src="../images/logo.png" class="image">
+            <div class="content">
+                发布资讯
+            </div>
+        </h2>
+        <form class="ui large form" action="/question/add" method="post">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="title" placeholder="title">
+                    </div>
+                </div>
+                <div class="field">
+                    <textarea rows="3" name="content" placeholder="content"></textarea>
+                </div>
+
+                <div class="fluid ui buttons">
+                    <button class="ui  teal submit button">add question</button>
+
+                </div>
+            </div>
+            <div class="ui error message"></div>
+        </form>
+
+    </div>
+
+    <div class="five wide column"></div>
+</div>
+
+#parse("footer.html")
