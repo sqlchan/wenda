@@ -5,15 +5,15 @@
 <configuration>
 
     <settings>
-        <!-- Globally enables or disables any caches configured in any mapper under this configuration -->
+        <!-- Globally enables or disables any caches configured in any mapper under this configuration 是否使用缓存-->
         <setting name="cacheEnabled" value="true"/>
-        <!-- Sets the number of seconds the driver will wait for a response from the database -->
+        <!-- Sets the number of seconds the driver will wait for a response from the database 超时时间 -->
         <setting name="defaultStatementTimeout" value="3000"/>
-        <!-- Enables automatic mapping from classic database column names A_COLUMN to camel case classic Java property names aColumn -->
+        <!-- Enables automatic mapping from classic database column names A_COLUMN to camel case classic Java property names aColumn 驼峰命名与对象命名方式转换-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <!-- Allows JDBC support for generated keys. A compatible driver is required.
         This setting forces generated keys to be used if set to true,
-         as some drivers deny compatibility but still work -->
+         as some drivers deny compatibility but still work设置是否使用JDBC的getGenereatedKeys方法获取主键并赋值到keyProperty设置的领域模型属性中 -->
         <setting name="useGeneratedKeys" value="true"/>
     </settings>
 
