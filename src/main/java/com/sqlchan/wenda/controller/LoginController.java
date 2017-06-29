@@ -30,7 +30,6 @@ public class LoginController {
     public String reg(Model model,
                       @RequestParam("username")String name,
                       @RequestParam("password")String password,
-                      @RequestParam(value = "next", required = false) String next,
                       HttpServletResponse response){
 
         try {
@@ -39,9 +38,6 @@ public class LoginController {
                 Cookie cookie=new Cookie("ticket",map.get("ticket").toString());
                 cookie.setPath("/");
                 response.addCookie(cookie);
-                if (StringUtils.isNotBlank(next)) {
-                    return "redirect:" + next;
-                }
                 return "redirect:/";
             }else {
                 model.addAttribute("msg", map.get("msg"));
