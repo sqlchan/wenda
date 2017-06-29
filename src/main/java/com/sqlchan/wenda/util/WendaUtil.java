@@ -11,6 +11,9 @@ import java.util.Map;
  * Created by Administrator on 2017/6/29.
  */
 public class WendaUtil {
+    public static int ANONYMOUS_USERID = 3;
+    public static int SYSTEM_USERID = 4;
+
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
     public static String getJSONString(int code) {
         JSONObject json = new JSONObject();
