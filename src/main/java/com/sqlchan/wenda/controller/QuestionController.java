@@ -3,11 +3,14 @@ package com.sqlchan.wenda.controller;
 import com.sqlchan.wenda.model.HostHolder;
 import com.sqlchan.wenda.model.Question;
 import com.sqlchan.wenda.service.QuestionService;
+import com.sqlchan.wenda.service.UserService;
 import com.sqlchan.wenda.util.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,8 @@ public class QuestionController {
     QuestionService questionService;
     @Autowired
     HostHolder hostHolder;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "/question/add",method = RequestMethod.POST)
     //@ResponseBody
@@ -52,6 +57,16 @@ public class QuestionController {
         }
         return "redirect:/";
         //return WendaUtil.getJSONString(1,"shibai");
+    }
+
+    @RequestMapping("/question/{qid}")
+    public String questiondetail(@PathVariable("qid")int qid,
+                                 Model model){
+        Question question=questionService.getById(qid);
+        model.addAttribute("question",question);
+        model.addAttribute("owner",userService.getUser(question.getUserId()));
+
+        return "detail";
     }
 
     @RequestMapping("/addquestionpage")

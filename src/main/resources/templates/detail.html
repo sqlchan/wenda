@@ -1,0 +1,119 @@
+#parse("header.html")
+
+<!--内容-->
+<div class="ui   grid">
+    <div class="three wide column"></div>
+    <div class="ten wide column">
+        <div class="ui comments">
+            <div class="ui basic segment">
+                <div class="comment">
+                    <a class="avatar" href="/user/$!{owner.id}">
+                        <img src="$!{owner.headUrl}">
+                    </a>
+                    <div class="content">
+                        <div class="text">
+                            <a href="/question/$!{question.id}">
+                                $!{question.title}
+                            </a>
+
+                        </div>
+                        <a class="author" href="/user/$!{owner.id}">
+                            $!{owner.name}
+                        </a>
+                        <div class="metadata">
+                            <div class="rating">
+                                <a href="/like/$!{question.id}">
+                                    #if($!{liked}>0)
+                                    <i class="red thumbs outline up icon"></i>
+                                    #else
+                                    <i class="thumbs outline up icon"></i>
+                                    #end
+                                </a>
+                                $!{likeCount}
+                            </div>
+                            <div class="rating">
+                                <a href="/dislike/$!{question.id}">
+                                    #if($!{liked}<0)
+                                    <i class="black thumbs outline down icon"></i>
+                                    #else
+                                    <i class="thumbs outline down icon"></i>
+                                    #end
+                                </a>
+                            </div>
+                            <div class="date">
+                                $date.format('hh:mm', $!{question.createdDate})
+                            </div>
+
+                        </div>
+
+                        <div class="text">
+                            $!{question.content}
+                        </div>
+                        <div class="actions">
+                            <a>
+                                <i class="talk icon"></i> $!{question.commentCount}
+                            </a>
+
+                            <a class="reply">关注该问题的人：</a>
+                            <!--
+                            <a class="save">Save</a>
+                            <a class="hide">Hide</a>
+                            <a>
+                                <i class="expand icon"></i> Full-screen
+                            </a>
+                            -->
+                            #foreach($v in $voss)
+                            <a>$!{v.username}</a>
+                            #end
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!---->
+            #if($!{user})
+            <div class="ui  aligned container ">
+                <form class="ui  form" action="/addComment" method="post">
+                    <input type="hidden" value="$!{question.id}" name="questionId">
+                    <div class="field">
+                        <textarea rows="2" name="content"></textarea>
+                    </div>
+                    <button class="ui  teal submit button">提交</button>
+                </form>
+            </div>
+            #else
+            <div class="ui right aligned container ">
+                <button class="ui small primary button">登录</button>
+            </div>
+            #end
+
+
+            <h3 class="ui dividing header">Comments</h3>
+            #foreach($comment in $comments)
+            <div class="ui minimal comments">
+                <div class="comment">
+                    <a class="avatar">
+                        <img src="$!{comment.user.headUrl}">
+                    </a>
+                    <div class="content">
+                        <a class="author">$!{comment.user.name}</a>
+                        <div class="metadata">
+                            <span class="date">$!{comment.comment.createdDate}</span>
+                        </div>
+                        <div class="text">
+                            <p>$!{comment.comment.content}</p>
+                        </div>
+                        <div class="actions">
+                            <a class="reply">Reply</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            #end
+        </div>
+    </div>
+    <div class="three wide column"></div>
+</div>
+<!---->
+#parse("footer.html")
