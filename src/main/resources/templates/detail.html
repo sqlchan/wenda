@@ -21,6 +21,8 @@
                             $!{owner.name}
                         </a>
                         <div class="metadata">
+
+                            <!--
                             <div class="rating">
                                 <a href="/like/$!{question.id}">
                                     #if($!{liked}>0)
@@ -40,6 +42,8 @@
                                     #end
                                 </a>
                             </div>
+                            -->
+
                             <div class="date">
                                 $date.format('hh:mm', $!{question.createdDate})
                             </div>
@@ -62,16 +66,18 @@
                                 <i class="expand icon"></i> Full-screen
                             </a>
                             -->
+               <!--
                             #foreach($v in $voss)
                             <a>$!{v.username}</a>
                             #end
-                        </div>
+                -->
+                       </div>
 
-                    </div>
-                </div>
-            </div>
+                   </div>
+               </div>
+           </div>
 
-            <!---->
+           <!---->
             #if($!{user})
             <div class="ui  aligned container ">
                 <form class="ui  form" action="/addComment" method="post">
