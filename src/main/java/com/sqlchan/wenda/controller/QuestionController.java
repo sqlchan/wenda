@@ -2,6 +2,7 @@ package com.sqlchan.wenda.controller;
 
 import com.sqlchan.wenda.model.*;
 import com.sqlchan.wenda.service.CommentService;
+import com.sqlchan.wenda.service.LikeService;
 import com.sqlchan.wenda.service.QuestionService;
 import com.sqlchan.wenda.service.UserService;
 import com.sqlchan.wenda.util.WendaUtil;
@@ -34,6 +35,8 @@ public class QuestionController {
     UserService userService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    LikeService likeService;
 
     @RequestMapping(value = "/question/add",method = RequestMethod.POST)
     //@ResponseBody
@@ -69,7 +72,6 @@ public class QuestionController {
         Question question=questionService.getById(qid);
         model.addAttribute("question",question);
         model.addAttribute("owner",userService.getUser(question.getUserId()));
-
         //
         List<Comment> commentList=commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESTION);
         List<ViewObject> comments=new ArrayList<>();
@@ -77,13 +79,28 @@ public class QuestionController {
             ViewObject vo=new ViewObject();
             vo.set("comment",comment);
             vo.set("user",userService.getUser(comment.getUserId()));
+//            if (hostHolder.getUser() == null) {
+//                vo.set("liked", 0);
+//            } else {
+//                vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+//            }
+//
+//            vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
             comments.add(vo);
         }
         model.addAttribute("comments",comments);
-
-        if (hostHolder.getUser() == null) {
-            return "redirect:loginpage";
+        //////////////
+        long likeCount=likeService.getLikeCount(EntityType.ENTITY_QUESTION,qid);
+        model.addAttribute("likeCount",likeCount);
+        int liked=0;
+        if(hostHolder!=null){
+            liked=likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,qid);
         }
+        model.addAttribute("liked",liked);
+        ///////////////
+//        if (hostHolder.getUser() == null) {
+//            return "loginpage";
+//        }
 
         return "detail";
     }

@@ -1,7 +1,10 @@
 package com.sqlchan.wenda.controller;
 
+import com.sqlchan.wenda.model.EntityType;
+import com.sqlchan.wenda.model.HostHolder;
 import com.sqlchan.wenda.model.Question;
 import com.sqlchan.wenda.model.ViewObject;
+import com.sqlchan.wenda.service.LikeService;
 import com.sqlchan.wenda.service.QuestionService;
 import com.sqlchan.wenda.service.UserService;
 import org.slf4j.Logger;
@@ -26,6 +29,10 @@ public class HomeController {
     UserService userService;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    LikeService likeService;
+    @Autowired
+    HostHolder hostHolder;
 
     @RequestMapping("/")
     public String index(Model model){
@@ -46,6 +53,14 @@ public class HomeController {
             ViewObject vo=new ViewObject();
             vo.set("question",question);
             vo.set("user",userService.getUser(question.getUserId()));
+            long likeCount=0;
+            likeCount=likeService.getLikeCount(EntityType.ENTITY_QUESTION,question.getId());
+            vo.set("likeCount",likeCount);
+            int liked=0;
+            if (hostHolder.getUser() != null) {
+                liked=likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, question.getId());
+            }
+            vo.set("liked",liked);
             vos.add(vo);
         }
         return vos;

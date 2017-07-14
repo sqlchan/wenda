@@ -1,0 +1,42 @@
+#parse("header.html")
+<!--内容-->
+<div class="ui   grid">
+    <div class="two wide column"></div>
+    <div class="nine wide column">
+
+
+        #set($cur_date = '')
+        #foreach($!{vo} in $!{vos})
+
+
+
+        <div class="ui comments">
+            <div class="comment">
+                <a class="avatar" href="/user/$!{vo.user.id}">
+                    <img src="$!{vo.user.headUrl}">
+                </a>
+                <div class="content">
+
+                    <a class="author" href="/user/$!{vo.user.id}">
+                        $!{vo.user.name}
+                    </a>
+
+                    <div class="actions">
+                        <a class="reply">Reply</a>
+                        <a class="save" href="/msg/detail/$!{conversation.conversation.conversationId}">详情</a>
+                        <a class="hide">Hide</a>
+                        <a>
+                            <i class="expand icon"></i> Full-screen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #end
+    </div>
+    <div class="one wide column"></div>
+    <div class="three wide column"></div>
+</div>
+
+<!---->
+#parse("footer.html")

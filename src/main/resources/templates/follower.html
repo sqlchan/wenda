@@ -1,5 +1,6 @@
 #parse("header.html")
 
+<!--内容-->
 <div class="ui   grid">
     <div class="two wide column"></div>
     <div class="nine wide column">
@@ -26,7 +27,6 @@
                             <a href="/followUser/$!{vo.user.id}">
                                 <i class="empty  heart icon"></i>
                             </a>
-
                         </div>
                     </div>
 
@@ -40,30 +40,7 @@
                                     <i class=" heart icon"></i>
                                 </a>
                             </div>
-                            <div class="rating">
-                                <a href="/like/$!{vo.question.id}">
 
-                                    #if($!{vo.liked}>0)
-                                    <i class="red thumbs outline up icon"></i>
-                                    #else
-                                    <i class="thumbs outline up icon"></i>
-                                    #end
-
-                                </a>
-                                $!{vo.likeCount}
-                            </div>
-                            <div class="rating">
-                                <a href="/dislike/$!{vo.question.id}">
-
-
-                                    #if(${vo.liked}<0)
-                                    <i class="black thumbs outline down icon"></i>
-                                    #else
-                                    <i class="thumbs outline down icon"></i>
-                                    #end
-
-                                </a>
-                            </div>
                             <div class="date">
                                 $date.format('hh:mm', $!{vo.question.createdDate})
                             </div>
