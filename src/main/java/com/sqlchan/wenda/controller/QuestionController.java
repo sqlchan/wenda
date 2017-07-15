@@ -93,8 +93,18 @@ public class QuestionController {
         long likeCount=likeService.getLikeCount(EntityType.ENTITY_QUESTION,qid);
         model.addAttribute("likeCount",likeCount);
         int liked=0;
-        if(hostHolder!=null){
+        //原先的程序中hostHolder!=null 该链接跳转出错NullPointerException，
+        //更改后hostHolder.getUser()!=null正常
+        if(hostHolder.getUser()!=null){
+//            logger.info("hostholder"+hostHolder.toString()); //fei kong
+//            logger.info("hostholder fei kong");
+//            if(hostHolder.getUser()==null){
+//                logger.error("hostholder user kong");  //kong
+//            }
+
+
             liked=likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,qid);
+            logger.error("worng");
         }
         model.addAttribute("liked",liked);
         ///////////////
