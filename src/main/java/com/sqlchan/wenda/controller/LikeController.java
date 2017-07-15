@@ -1,8 +1,12 @@
 package com.sqlchan.wenda.controller;
 
+import com.sqlchan.wenda.async.EventModel;
+import com.sqlchan.wenda.async.EventProducer;
+import com.sqlchan.wenda.async.EventType;
 import com.sqlchan.wenda.model.EntityType;
 import com.sqlchan.wenda.model.HostHolder;
 import com.sqlchan.wenda.service.LikeService;
+import com.sqlchan.wenda.service.QuestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +25,15 @@ public class LikeController {
     HostHolder hostHolder;
     @Autowired
     LikeService likeService;
+    @Autowired
+    EventProducer eventProducer;
+    @Autowired
+    QuestionService questionService;
 
     @RequestMapping(path = "/like/{questionid}")
     //@ResponseBody
     public String like(@PathVariable("questionid") int questionid){
+        eventProducer.fireEvent(new EventModel(EventType.LIKE).setActorId(hostHolder.getUser().getId()).setEntityId(questionid).setEntityType(EntityType.ENTITY_QUESTION).setExt("questionid",String.valueOf(questionid)).setEntityOwnerId(questionService.getById(questionid).getUserId()));
         long likecount=likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionid);
         //return WendaUtil.getJSONString(0, String.valueOf(likecount));
         return "redirect:/question/"+questionid;
