@@ -1,0 +1,98 @@
+#parse("header.html")
+
+<div class="ui   grid">
+    <div class="two wide column"></div>
+    <div class="nine wide column">
+        #set($cur_date = '')
+        #foreach($vo in $vos)
+        #if ($cur_date != $date.format('yyyy-MM-dd', $vo.question.createdDate))
+        #set($cur_date = $date.format('yyyy-MM-dd', $vo.question.createdDate))
+        <h4 class="ui horizontal divider header">
+            <i class="calendar icon"></i>
+            头条资讯 &nbsp; $date.format('yyyy-MM-dd', $vo.question.createdDate)
+        </h4>
+        #end
+        <div class="ui comments">
+            <div class="comment">
+                <a class="avatar" href="/user/$!{vo.user.id}">
+                    <img src="$!{vo.user.headUrl}">
+                </a>
+                <div class="content">
+                    <a class="author" href="/user/$!{vo.user.id}">
+                        $!{vo.user.name}
+                    </a>
+                    <div class="metadata">
+                        <div class="rating">
+                            <a href="/followUser/$!{vo.user.id}">
+                                <i class="empty  heart icon"></i>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="text">
+                        <a href="/question/$!{vo.question.id}">
+                            $!{vo.question.title}
+                        </a>
+                        <div class="metadata">
+                            <div class="rating">
+                                <a href="/followQuestion/$!{vo.question.id}">
+                                    <i class=" heart icon"></i>
+                                </a>
+                            </div>
+                            <div class="rating">
+                                <a href="/like/$!{vo.question.id}">
+
+                                    #if($!{vo.liked}>0)
+                                    <i class="red thumbs outline up icon"></i>
+                                    #else
+                                    <i class="thumbs outline up icon"></i>
+                                    #end
+
+                                </a>
+                                $!{vo.likeCount}
+                            </div>
+                            <div class="rating">
+                                <a href="/dislike/$!{vo.question.id}">
+
+
+                                    #if(${vo.liked}<0)
+                                    <i class="black thumbs outline down icon"></i>
+                                    #else
+                                    <i class="thumbs outline down icon"></i>
+                                    #end
+
+                                </a>
+                            </div>
+                            <div class="date">
+                                $date.format('hh:mm', $!{vo.question.createdDate})
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text">
+                        $!{vo.question.content}
+                    </div>
+                    <div class="actions">
+                        <a>
+                            <i class="talk icon"></i> $!{vo.question.commentCount}
+                        </a>
+
+                        <a class="reply">Reply</a>
+                        <a class="save">Save</a>
+                        <a class="hide">Hide</a>
+                        <a>
+                            <i class="expand icon"></i> Full-screen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #end
+    </div>
+    <div class="one wide column"></div>
+    <div class="three wide column"></div>
+</div>
+
+#parse("footer.html")

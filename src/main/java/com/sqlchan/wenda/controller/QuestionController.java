@@ -1,5 +1,8 @@
 package com.sqlchan.wenda.controller;
 
+import com.sqlchan.wenda.async.EventModel;
+import com.sqlchan.wenda.async.EventProducer;
+import com.sqlchan.wenda.async.EventType;
 import com.sqlchan.wenda.model.*;
 import com.sqlchan.wenda.service.CommentService;
 import com.sqlchan.wenda.service.LikeService;
@@ -37,6 +40,8 @@ public class QuestionController {
     CommentService commentService;
     @Autowired
     LikeService likeService;
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping(value = "/question/add",method = RequestMethod.POST)
     //@ResponseBody
@@ -55,6 +60,7 @@ public class QuestionController {
             }
 
             if(questionService.addquestion(question)>0){
+                eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION).setActorId(question.getUserId()).setEntityId(question.getId()).setExt("title", question.getTitle()).setExt("content", question.getContent()));
                 return "redirect:/";
                 //return WendaUtil.getJSONString(0);
             }
